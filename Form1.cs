@@ -16,9 +16,6 @@ namespace MSC_control
         Socket client;//socket
         byte[] bufbar = new byte[10240];
 
-
-        
-
         public Form1()
         {
             InitializeComponent();
@@ -89,12 +86,7 @@ namespace MSC_control
                 Properties.Settings.Default.Save();
 
             }
-
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
