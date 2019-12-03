@@ -9,6 +9,33 @@ using System.Windows.Forms;
 using System.Net.Sockets;
 using System.Net;
 
+/*
+ * Address table
+ * 0        model number
+ * 5F 
+ * 71C      current time/date
+ * 784      ?array[3] (hex)
+ * 785      ?array[3] (int)
+ * 81       ?cont. update status (bool)
+ * 786      ?array[3] (int)
+ * 88       ?cont. update status (bool)
+ * 787      ?array[3] (int)
+ * 89       ?cont. update status (bool)
+ * 78E      ?array[3] (hex)
+ * 8A       ?cont. update status (bool)
+ * 78F      ?array[3] (int)
+ * 8B       ?cont. update status (bool)
+ * 790      ?array[3] (int)
+ * 8C       ?cont. update status (bool)
+ * 791      ?array[3] (int)
+ * 8D       ?cont. update status (bool)
+ * 792      ?array[3] (int)
+ * 8E       ?cont. update status (bool)
+ * 793      ?array[3] (int)
+ * 8F       ?cont. update status (bool)
+ * 794      ?array[3] (hex)
+ * 90       ?cont. update status (bool)
+ */
 namespace MSC_control
 {
     public partial class Form1 : Form
@@ -17,7 +44,7 @@ namespace MSC_control
         byte[] bufbar = new byte[10240];
 
 
-        
+     
 
         public Form1()
         {
@@ -52,300 +79,68 @@ namespace MSC_control
                 this.label24.Text = "已经连接";
 
 
-               
-                try //获取Output1初始状态
-                {
-                    String command = "sRI 50A";
-                    Byte[] commad_arry = Encoding.UTF8.GetBytes(command);
 
-                    Byte[] send = new Byte[command.Length + 2];
-                    send[0] = 0x02;
-                    for (int i = 0; i < command.Length; i++)
-                    {
-                        send[i + 1] = commad_arry[i];
-                    }
-
-                    send[command.Length + 1] = 0x03;
-
-                    client.Send(send);
-                    System.Threading.Thread.Sleep(10);
-                }
-                catch (Exception)
+                try
                 {
 
-                    throw;
-                }
+                    int i3;
+                    String strHex;
+                        for (i3=0; i3<=16; i3++)
+                        {
+                            if (i3 >= 10)
+                            {
+                                switch (i3)
+                                {
+                                    case 10:
+                                    strHex = "A";
+                                        break;
+                                    case 11:
+                                    strHex = "B";
+                                        break;
+                                    case 12:
+                                    strHex = "C";
+                                        break;
+                                    case 13:
+                                    strHex = "D";
+                                        break;
+                                    case 14:
+                                    strHex = "E";
+                                        break;
+                                    case 15:
+                                    strHex = "F";
+                                        break;
+                                }
+                            }
+                            else if (i3 <=9)
+                            {
+                                strHex = i3.ToString();
+                            }
+                            
+                            int i2;
+                            for (i2 = 0; 99 <= i2; i2++)
+                            {
+                                String command = "sRI " + i2 + strHex;
+                                Byte[] commad_arry = Encoding.UTF8.GetBytes(command);
 
-                try //获取Output2初始状态
-                {
-                    String command = "sRI 50B";
-                    Byte[] commad_arry = Encoding.UTF8.GetBytes(command);
+                                Byte[] send = new Byte[command.Length + 2];
+                                send[0] = 0x02;
+                                for (int i = 0; i < command.Length; i++)
+                                {
+                                    send[i + 1] = commad_arry[i];
+                                }
 
-                    Byte[] send = new Byte[command.Length + 2];
-                    send[0] = 0x02;
-                    for (int i = 0; i < command.Length; i++)
-                    {
-                        send[i + 1] = commad_arry[i];
-                    }
-
-                    send[command.Length + 1] = 0x03;
-
-                    client.Send(send);
-                    System.Threading.Thread.Sleep(10);
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
-
-                try //获取Output3初始状态
-                {
-                    String command = "sRI 50C";
-                    Byte[] commad_arry = Encoding.UTF8.GetBytes(command);
-
-                    Byte[] send = new Byte[command.Length + 2];
-                    send[0] = 0x02;
-                    for (int i = 0; i < command.Length; i++)
-                    {
-                        send[i + 1] = commad_arry[i];
-                    }
-
-                    send[command.Length + 1] = 0x03;
-
-                    client.Send(send);
-                    System.Threading.Thread.Sleep(10);
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
-
-                try //获取Output4初始状态
-                {
-                    String command = "sRI 50D";
-                    Byte[] commad_arry = Encoding.UTF8.GetBytes(command);
-
-                    Byte[] send = new Byte[command.Length + 2];
-                    send[0] = 0x02;
-                    for (int i = 0; i < command.Length; i++)
-                    {
-                        send[i + 1] = commad_arry[i];
-                    }
-
-                    send[command.Length + 1] = 0x03;
-
-                    client.Send(send);
-                    System.Threading.Thread.Sleep(10);
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
-
-                try //获取Relay1初始状态
-                {
-                    String command = "sRI 50E";
-                    Byte[] commad_arry = Encoding.UTF8.GetBytes(command);
-
-                    Byte[] send = new Byte[command.Length + 2];
-                    send[0] = 0x02;
-                    for (int i = 0; i < command.Length; i++)
-                    {
-                        send[i + 1] = commad_arry[i];
-                    }
-
-                    send[command.Length + 1] = 0x03;
-
-                    client.Send(send);
-                    System.Threading.Thread.Sleep(10);
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
-
-                try //获取Relay2初始状态
-                {
-                    String command = "sRI 50F";
-                    Byte[] commad_arry = Encoding.UTF8.GetBytes(command);
-
-                    Byte[] send = new Byte[command.Length + 2];
-                    send[0] = 0x02;
-                    for (int i = 0; i < command.Length; i++)
-                    {
-                        send[i + 1] = commad_arry[i];
-                    }
-
-                    send[command.Length + 1] = 0x03;
-
-                    client.Send(send);
-                    System.Threading.Thread.Sleep(10);
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
-
-
-                try //系统状态连续发送-开
-                {
-                    String command = "sEI 5F 1";
-                    Byte[] commad_arry = Encoding.UTF8.GetBytes(command);
-
-                    Byte[] send = new Byte[command.Length + 2];
-                    send[0] = 0x02;
-                    for (int i = 0; i < command.Length; i++)
-                    {
-                        send[i + 1] = commad_arry[i];
-                    }
-
-                    send[command.Length + 1] = 0x03;
-
-                    client.Send(send);
-                }
-                catch (Exception)
-                {
+                                send[command.Length + 1] = 0x03;
+                                client.Send(send);
+                                System.Threading.Thread.Sleep(100);
+                            }
+                        }
                     
-                    throw;
-                }
-
-                try //Output1状态连续发送-开
-                {
-                    String command = "sEI 54 1";
-                    Byte[] commad_arry = Encoding.UTF8.GetBytes(command);
-
-                    Byte[] send = new Byte[command.Length + 2];
-                    send[0] = 0x02;
-                    for (int i = 0; i < command.Length; i++)
-                    {
-                        send[i + 1] = commad_arry[i];
-                    }
-
-                    send[command.Length + 1] = 0x03;
-
-                    client.Send(send);
                 }
                 catch (Exception)
                 {
 
                     throw;
                 }
-
-                try //Output2状态连续发送-开
-                {
-                    String command = "sEI 55 1";
-                    Byte[] commad_arry = Encoding.UTF8.GetBytes(command);
-
-                    Byte[] send = new Byte[command.Length + 2];
-                    send[0] = 0x02;
-                    for (int i = 0; i < command.Length; i++)
-                    {
-                        send[i + 1] = commad_arry[i];
-                    }
-
-                    send[command.Length + 1] = 0x03;
-
-                    client.Send(send);
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
-
-                try //Output3状态连续发送-开
-                {
-                    String command = "sEI 56 1";
-                    Byte[] commad_arry = Encoding.UTF8.GetBytes(command);
-
-                    Byte[] send = new Byte[command.Length + 2];
-                    send[0] = 0x02;
-                    for (int i = 0; i < command.Length; i++)
-                    {
-                        send[i + 1] = commad_arry[i];
-                    }
-
-                    send[command.Length + 1] = 0x03;
-
-                    client.Send(send);
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
-
-                try //Output4状态连续发送-开
-                {
-                    String command = "sEI 58 1";
-                    Byte[] commad_arry = Encoding.UTF8.GetBytes(command);
-
-                    Byte[] send = new Byte[command.Length + 2];
-                    send[0] = 0x02;
-                    for (int i = 0; i < command.Length; i++)
-                    {
-                        send[i + 1] = commad_arry[i];
-                    }
-
-                    send[command.Length + 1] = 0x03;
-
-                    client.Send(send);
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
-
-                try //relay1状态连续发送-开
-                {
-                    String command = "sEI 94 1";
-                    Byte[] commad_arry = Encoding.UTF8.GetBytes(command);
-
-                    Byte[] send = new Byte[command.Length + 2];
-                    send[0] = 0x02;
-                    for (int i = 0; i < command.Length; i++)
-                    {
-                        send[i + 1] = commad_arry[i];
-                    }
-
-                    send[command.Length + 1] = 0x03;
-
-                    client.Send(send);
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
-
-                try //relay2状态连续发送-开
-                {
-                    String command = "sEI 59 1";
-                    Byte[] commad_arry = Encoding.UTF8.GetBytes(command);
-
-                    Byte[] send = new Byte[command.Length + 2];
-                    send[0] = 0x02;
-                    for (int i = 0; i < command.Length; i++)
-                    {
-                        send[i + 1] = commad_arry[i];
-                    }
-
-                    send[command.Length + 1] = 0x03;
-
-                    client.Send(send);
-                }
-                catch (Exception)
-                {
-
-                    //throw;
-                }
-
             }
             catch (Exception)
             {
