@@ -1,0 +1,57 @@
+D:\JLteach\MSC control\MSC control\MSC control\bin\Debug\MSC control.exe.config
+D:\JLteach\MSC control\MSC control\MSC control\bin\Debug\MSC control.exe
+D:\JLteach\MSC control\MSC control\MSC control\bin\Debug\MSC control.pdb
+D:\JLteach\MSC control\MSC control\MSC control\obj\x86\Debug\MSC_control.Form1.resources
+D:\JLteach\MSC control\MSC control\MSC control\obj\x86\Debug\MSC_control.Properties.Resources.resources
+D:\JLteach\MSC control\MSC control\MSC control\obj\x86\Debug\MSC control.csproj.GenerateResource.Cache
+D:\JLteach\MSC control\MSC control\MSC control\obj\x86\Debug\MSC control.exe
+D:\JLteach\MSC control\MSC control\MSC control\obj\x86\Debug\MSC control.pdb
+D:\JLteach\MSC control\MSC control\MSC control\obj\x86\Debug\MSC control.csprojResolveAssemblyReference.cache
+C:\Marco\marco\JLteach\MSC control\MSC control\MSC control\bin\Debug\MSC control.exe.config
+C:\Marco\marco\JLteach\MSC control\MSC control\MSC control\obj\x86\Debug\MSC control.exe
+C:\Marco\marco\JLteach\MSC control\MSC control\MSC control\obj\x86\Debug\MSC control.pdb
+C:\Marco\marco\JLteach\MSC control\MSC control\MSC control\bin\Debug\MSC control.exe
+C:\Marco\marco\JLteach\MSC control\MSC control\MSC control\bin\Debug\MSC control.pdb
+C:\Marco\marco\JLteach\MSC control\MSC control\MSC control\obj\x86\Debug\MSC_control.Form1.resources
+C:\Marco\marco\JLteach\MSC control\MSC control\MSC control\obj\x86\Debug\MSC_control.Properties.Resources.resources
+C:\Marco\marco\JLteach\MSC control\MSC control\MSC control\obj\x86\Debug\MSC control.csproj.GenerateResource.Cache
+G:\marco\Marco\marco\JLteach\MSC control\MSC control\MSC control\bin\Debug\MSC control.exe.config
+G:\marco\Marco\marco\JLteach\MSC control\MSC control\MSC control\bin\Debug\MSC control.exe
+G:\marco\Marco\marco\JLteach\MSC control\MSC control\MSC control\bin\Debug\MSC control.pdb
+G:\marco\Marco\marco\JLteach\MSC control\MSC control\MSC control\obj\x86\Debug\MSC_control.Form1.resources
+G:\marco\Marco\marco\JLteach\MSC control\MSC control\MSC control\obj\x86\Debug\MSC_control.Properties.Resources.resources
+G:\marco\Marco\marco\JLteach\MSC control\MSC control\MSC control\obj\x86\Debug\MSC control.csproj.GenerateResource.cache
+G:\marco\Marco\marco\JLteach\MSC control\MSC control\MSC control\obj\x86\Debug\MSC control.csproj.CoreCompileInputs.cache
+G:\marco\Marco\marco\JLteach\MSC control\MSC control\MSC control\obj\x86\Debug\MSC control.exe
+G:\marco\Marco\marco\JLteach\MSC control\MSC control\MSC control\obj\x86\Debug\MSC control.pdb
+G:\marco\Marco\marco\JLteach\MSC control\MSC control\MSC control\obj\x86\Debug\MSC control.csprojAssemblyReference.cache
+D:\project List\MSC control\MSC control\MSC control\bin\Debug\MSC control.exe.config
+D:\project List\MSC control\MSC control\MSC control\bin\Debug\MSC control.exe
+D:\project List\MSC control\MSC control\MSC control\bin\Debug\MSC control.pdb
+D:\project List\MSC control\MSC control\MSC control\obj\x86\Debug\MSC control.csprojAssemblyReference.cache
+D:\project List\MSC control\MSC control\MSC control\obj\x86\Debug\MSC_control.Form1.resources
+D:\project List\MSC control\MSC control\MSC control\obj\x86\Debug\MSC_control.Properties.Resources.resources
+D:\project List\MSC control\MSC control\MSC control\obj\x86\Debug\MSC control.csproj.GenerateResource.cache
+D:\project List\MSC control\MSC control\MSC control\obj\x86\Debug\MSC control.csproj.CoreCompileInputs.cache
+D:\project List\MSC control\MSC control\MSC control\obj\x86\Debug\MSC control.exe
+D:\project List\MSC control\MSC control\MSC control\obj\x86\Debug\MSC control.pdb
+E:\marco liu data backup\project List\MSC control\MSC control\MSC control\bin\Debug\MSC control.exe.config
+E:\marco liu data backup\project List\MSC control\MSC control\MSC control\bin\Debug\MSC control.exe
+E:\marco liu data backup\project List\MSC control\MSC control\MSC control\bin\Debug\MSC control.pdb
+E:\marco liu data backup\project List\MSC control\MSC control\MSC control\obj\x86\Debug\MSC control.csprojAssemblyReference.cache
+E:\marco liu data backup\project List\MSC control\MSC control\MSC control\obj\x86\Debug\MSC_control.Form1.resources
+E:\marco liu data backup\project List\MSC control\MSC control\MSC control\obj\x86\Debug\MSC_control.Properties.Resources.resources
+E:\marco liu data backup\project List\MSC control\MSC control\MSC control\obj\x86\Debug\MSC control.csproj.GenerateResource.cache
+E:\marco liu data backup\project List\MSC control\MSC control\MSC control\obj\x86\Debug\MSC control.csproj.CoreCompileInputs.cache
+E:\marco liu data backup\project List\MSC control\MSC control\MSC control\obj\x86\Debug\MSC control.exe
+E:\marco liu data backup\project List\MSC control\MSC control\MSC control\obj\x86\Debug\MSC control.pdb
+C:\Users\Koland Mak\source\repos\MSC control\MSC control\bin\Debug\MSC control.exe.config
+C:\Users\Koland Mak\source\repos\MSC control\MSC control\bin\Debug\MSC control.exe
+C:\Users\Koland Mak\source\repos\MSC control\MSC control\bin\Debug\MSC control.pdb
+C:\Users\Koland Mak\source\repos\MSC control\MSC control\obj\x86\Debug\MSC control.csprojAssemblyReference.cache
+C:\Users\Koland Mak\source\repos\MSC control\MSC control\obj\x86\Debug\MSC_control.Form1.resources
+C:\Users\Koland Mak\source\repos\MSC control\MSC control\obj\x86\Debug\MSC_control.Properties.Resources.resources
+C:\Users\Koland Mak\source\repos\MSC control\MSC control\obj\x86\Debug\MSC control.csproj.GenerateResource.cache
+C:\Users\Koland Mak\source\repos\MSC control\MSC control\obj\x86\Debug\MSC control.csproj.CoreCompileInputs.cache
+C:\Users\Koland Mak\source\repos\MSC control\MSC control\obj\x86\Debug\MSC control.exe
+C:\Users\Koland Mak\source\repos\MSC control\MSC control\obj\x86\Debug\MSC control.pdb
