@@ -15,7 +15,8 @@ namespace MSC_control
     {
         Socket client;//socket
         byte[] bufbar = new byte[10240];
-
+        String[] barcodeArry = new String[1000];
+        int barIndex = 0;
         public Form1()
         {
             InitializeComponent();
@@ -43,9 +44,49 @@ namespace MSC_control
                 
                // throw;
             }
+            try //enable data feed
+            {
+                String command = "sEI C1 1";
+                Byte[] commad_arry = Encoding.UTF8.GetBytes(command);
 
+                Byte[] send = new Byte[command.Length + 2];
+                send[0] = 0x02;
+                for (int i = 0; i < command.Length; i++)
+                {
+                    send[i + 1] = commad_arry[i];
+                }
 
-              
+                send[command.Length + 1] = 0x03;
+
+                client.Send(send);
+                System.Threading.Thread.Sleep(10);
+            }
+            catch (Exception)
+            {
+
+               // throw;
+            }
+            try //activate module
+            {
+                String command = "sMI A3";
+                Byte[] commad_arry = Encoding.UTF8.GetBytes(command);
+
+                Byte[] send = new Byte[command.Length + 2];
+                send[0] = 0x02;
+                for (int i = 0; i < command.Length; i++)
+                {
+                    send[i + 1] = commad_arry[i];
+                }
+
+                send[command.Length + 1] = 0x03;
+
+                client.Send(send);
+                System.Threading.Thread.Sleep(10);
+            }
+            catch (Exception)
+            {
+               //throw;
+            }
 
         }
 
@@ -62,19 +103,30 @@ namespace MSC_control
             parsedata(_context);
 
         }
-
+        
         void parsedata(String data) 
         {
-
-            String[] _commandArry = data.Split(new char[2] { '_', ';' });
-            if (_commandArry[0] != "0")
+            String[] _commandArry = data.Split(' ');
+            if (_commandArry[0] == "sSI")
             {
-                textBox_Barcode.Text = _commandArry[1]; //barcode
-                textBox_Length.Text = _commandArry[2];  //length
-                textBox_Width.Text = _commandArry[3];   //width
-                textBox_Height.Text = _commandArry[4];  //height
-                textBox_Volume.Text = _commandArry[5];  //volume
-                textBox_Weight.Text = _commandArry[6];  //weight
+                try
+                {
+                    
+                    textBox_Index.Text = barIndex.ToString();
+                    textBox_Barcode.Text = _commandArry[19]; //barcode
+                    //textBox_Length.Text = _commandArry[2];  //length
+                    //textBox_Width.Text = _commandArry[3];   //width
+                    //textBox_Height.Text = _commandArry[4];  //height
+                    //textBox_Volume.Text = _commandArry[5];  //volume
+                    //textBox_Weight.Text = _commandArry[6];  //weight
+                    barcodeArry[barIndex] = _commandArry[19];
+                    barIndex += 1;
+                }
+                catch (Exception)
+                {
+                    textBox_Barcode.Text = "No Read";
+                    //throw;
+                }
             }
         }
 

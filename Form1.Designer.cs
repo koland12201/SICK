@@ -44,6 +44,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBox_Volume = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.textBox_Index = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // Length
@@ -104,15 +106,15 @@
             this.label23.Enabled = false;
             this.label23.Location = new System.Drawing.Point(21, 293);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(56, 12);
+            this.label23.Size = new System.Drawing.Size(70, 12);
             this.label23.TabIndex = 40;
-            this.label23.Text = "MSC状态:";
+            this.label23.Text = "Scanner status";
             // 
             // label24
             // 
             this.label24.AutoSize = true;
             this.label24.Enabled = false;
-            this.label24.Location = new System.Drawing.Point(80, 292);
+            this.label24.Location = new System.Drawing.Point(97, 293);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(41, 12);
             this.label24.TabIndex = 41;
@@ -187,11 +189,31 @@
             this.label2.TabIndex = 51;
             this.label2.Text = "Volume";
             // 
+            // textBox_Index
+            // 
+            this.textBox_Index.Enabled = false;
+            this.textBox_Index.HideSelection = false;
+            this.textBox_Index.Location = new System.Drawing.Point(32, 53);
+            this.textBox_Index.Name = "textBox_Index";
+            this.textBox_Index.Size = new System.Drawing.Size(100, 22);
+            this.textBox_Index.TabIndex = 55;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(61, 29);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(32, 12);
+            this.label3.TabIndex = 56;
+            this.label3.Text = "Index";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(497, 334);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.textBox_Index);
             this.Controls.Add(this.textBox_Weight);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox_Volume);
@@ -209,7 +231,7 @@
             this.Controls.Add(this.textBox_Length);
             this.Controls.Add(this.Length);
             this.Name = "Form1";
-            this.Text = "MSC monitor";
+            this.Text = "CLV62x barcode scanner";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -234,6 +256,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox_Volume;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBox_Index;
+        private System.Windows.Forms.Label label3;
     }
 }
 
