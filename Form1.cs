@@ -68,7 +68,7 @@ namespace MSC_control
             }
             try //activate module
             {
-                String command = "sMI A3";
+                String command = "sMI A3"; //"sMI A4" to shut down
                 Byte[] commad_arry = Encoding.UTF8.GetBytes(command);
 
                 Byte[] send = new Byte[command.Length + 2];
