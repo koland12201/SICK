@@ -119,6 +119,7 @@ namespace MSC_control
                     //textBox_Height.Text = _commandArry[4];  //height
                     //textBox_Volume.Text = _commandArry[5];  //volume
                     //textBox_Weight.Text = _commandArry[6];  //weight
+                    listBox_Barocde.Items.Add(_commandArry[19]);
                     barcodeArry[barIndex] = _commandArry[19];
                     barIndex += 1;
                 }

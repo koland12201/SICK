@@ -46,6 +46,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBox_Index = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.listBox_Barocde = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // Length
@@ -207,11 +208,21 @@
             this.label3.TabIndex = 56;
             this.label3.Text = "Index";
             // 
+            // listBox_Barocde
+            // 
+            this.listBox_Barocde.FormattingEnabled = true;
+            this.listBox_Barocde.ItemHeight = 12;
+            this.listBox_Barocde.Location = new System.Drawing.Point(384, 29);
+            this.listBox_Barocde.Name = "listBox_Barocde";
+            this.listBox_Barocde.Size = new System.Drawing.Size(101, 244);
+            this.listBox_Barocde.TabIndex = 57;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(497, 334);
+            this.Controls.Add(this.listBox_Barocde);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBox_Index);
             this.Controls.Add(this.textBox_Weight);
@@ -258,6 +269,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox_Index;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ListBox listBox_Barocde;
     }
 }
 
