@@ -32,7 +32,7 @@
             this.textBox_Target = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox_IP = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
             this.button_Search = new System.Windows.Forms.Button();
             this.listBox_resultAddress = new System.Windows.Forms.ListBox();
@@ -42,6 +42,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBox_addressSize = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.checkBox_Fuzzy = new System.Windows.Forms.CheckBox();
+            this.button_Connect = new System.Windows.Forms.Button();
+            this.textBox_Port = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -65,7 +69,7 @@
             // 
             this.label23.AutoSize = true;
             this.label23.Enabled = false;
-            this.label23.Location = new System.Drawing.Point(5, 402);
+            this.label23.Location = new System.Drawing.Point(5, 571);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(59, 12);
             this.label23.TabIndex = 40;
@@ -76,23 +80,23 @@
             this.label24.AutoSize = true;
             this.label24.Enabled = false;
             this.label24.ForeColor = System.Drawing.Color.Red;
-            this.label24.Location = new System.Drawing.Point(62, 403);
+            this.label24.Location = new System.Drawing.Point(62, 572);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(41, 12);
             this.label24.TabIndex = 41;
             this.label24.Text = "未连接";
             // 
-            // textBox1
+            // textBox_IP
             // 
-            this.textBox1.Location = new System.Drawing.Point(147, 399);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(175, 22);
-            this.textBox1.TabIndex = 46;
+            this.textBox_IP.Location = new System.Drawing.Point(147, 568);
+            this.textBox_IP.Name = "textBox_IP";
+            this.textBox_IP.Size = new System.Drawing.Size(175, 22);
+            this.textBox_IP.TabIndex = 46;
             // 
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(126, 404);
+            this.label25.Location = new System.Drawing.Point(126, 573);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(18, 12);
             this.label25.TabIndex = 47;
@@ -100,7 +104,7 @@
             // 
             // button_Search
             // 
-            this.button_Search.Location = new System.Drawing.Point(19, 70);
+            this.button_Search.Location = new System.Drawing.Point(19, 56);
             this.button_Search.Name = "button_Search";
             this.button_Search.Size = new System.Drawing.Size(100, 43);
             this.button_Search.TabIndex = 48;
@@ -114,12 +118,12 @@
             this.listBox_resultAddress.ItemHeight = 12;
             this.listBox_resultAddress.Location = new System.Drawing.Point(128, 54);
             this.listBox_resultAddress.Name = "listBox_resultAddress";
-            this.listBox_resultAddress.Size = new System.Drawing.Size(460, 328);
+            this.listBox_resultAddress.Size = new System.Drawing.Size(1354, 508);
             this.listBox_resultAddress.TabIndex = 49;
             // 
             // button_Reset
             // 
-            this.button_Reset.Location = new System.Drawing.Point(19, 119);
+            this.button_Reset.Location = new System.Drawing.Point(19, 105);
             this.button_Reset.Name = "button_Reset";
             this.button_Reset.Size = new System.Drawing.Size(100, 43);
             this.button_Reset.TabIndex = 51;
@@ -131,7 +135,7 @@
             // 
             this.checkBox_scanCompleted.AutoSize = true;
             this.checkBox_scanCompleted.Enabled = false;
-            this.checkBox_scanCompleted.Location = new System.Drawing.Point(185, 32);
+            this.checkBox_scanCompleted.Location = new System.Drawing.Point(265, 30);
             this.checkBox_scanCompleted.Name = "checkBox_scanCompleted";
             this.checkBox_scanCompleted.Size = new System.Drawing.Size(97, 16);
             this.checkBox_scanCompleted.TabIndex = 52;
@@ -160,25 +164,65 @@
             // 
             this.textBox_addressSize.Enabled = false;
             this.textBox_addressSize.HideSelection = false;
-            this.textBox_addressSize.Location = new System.Drawing.Point(488, 26);
+            this.textBox_addressSize.Location = new System.Drawing.Point(208, 28);
             this.textBox_addressSize.Name = "textBox_addressSize";
-            this.textBox_addressSize.Size = new System.Drawing.Size(100, 22);
+            this.textBox_addressSize.Size = new System.Drawing.Size(51, 22);
             this.textBox_addressSize.TabIndex = 55;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(528, 9);
+            this.label3.Location = new System.Drawing.Point(224, 13);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(24, 12);
             this.label3.TabIndex = 56;
             this.label3.Text = "Size";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(51, 163);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(29, 12);
+            this.label4.TabIndex = 57;
+            this.label4.Text = "Flags";
+            // 
+            // checkBox_Fuzzy
+            // 
+            this.checkBox_Fuzzy.AutoSize = true;
+            this.checkBox_Fuzzy.Location = new System.Drawing.Point(19, 178);
+            this.checkBox_Fuzzy.Name = "checkBox_Fuzzy";
+            this.checkBox_Fuzzy.Size = new System.Drawing.Size(84, 16);
+            this.checkBox_Fuzzy.TabIndex = 58;
+            this.checkBox_Fuzzy.Text = "Fuzzy search";
+            this.checkBox_Fuzzy.UseVisualStyleBackColor = true;
+            // 
+            // button_Connect
+            // 
+            this.button_Connect.Location = new System.Drawing.Point(391, 568);
+            this.button_Connect.Name = "button_Connect";
+            this.button_Connect.Size = new System.Drawing.Size(66, 22);
+            this.button_Connect.TabIndex = 59;
+            this.button_Connect.Text = "connect";
+            this.button_Connect.UseVisualStyleBackColor = true;
+            this.button_Connect.Click += new System.EventHandler(this.button_Connect_Click);
+            // 
+            // textBox_Port
+            // 
+            this.textBox_Port.Location = new System.Drawing.Point(328, 568);
+            this.textBox_Port.Name = "textBox_Port";
+            this.textBox_Port.Size = new System.Drawing.Size(57, 22);
+            this.textBox_Port.TabIndex = 60;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(615, 428);
+            this.ClientSize = new System.Drawing.Size(1490, 602);
+            this.Controls.Add(this.textBox_Port);
+            this.Controls.Add(this.button_Connect);
+            this.Controls.Add(this.checkBox_Fuzzy);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBox_addressSize);
             this.Controls.Add(this.label2);
@@ -188,7 +232,7 @@
             this.Controls.Add(this.listBox_resultAddress);
             this.Controls.Add(this.button_Search);
             this.Controls.Add(this.label25);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBox_IP);
             this.Controls.Add(this.label24);
             this.Controls.Add(this.label23);
             this.Controls.Add(this.textBox_Target);
@@ -207,7 +251,7 @@
         private System.Windows.Forms.TextBox textBox_Target;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox_IP;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Button button_Search;
         private System.Windows.Forms.ListBox listBox_resultAddress;
@@ -217,6 +261,10 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox_addressSize;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox checkBox_Fuzzy;
+        private System.Windows.Forms.Button button_Connect;
+        private System.Windows.Forms.TextBox textBox_Port;
     }
 }
 
