@@ -36,17 +36,18 @@
             this.label25 = new System.Windows.Forms.Label();
             this.button_Search = new System.Windows.Forms.Button();
             this.listBox_resultAddress = new System.Windows.Forms.ListBox();
-            this.listBox_resultData = new System.Windows.Forms.ListBox();
             this.button_Reset = new System.Windows.Forms.Button();
             this.checkBox_scanCompleted = new System.Windows.Forms.CheckBox();
             this.textBox_addressCount = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.textBox_addressSize = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(49, 18);
+            this.label1.Location = new System.Drawing.Point(51, 13);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 12);
             this.label1.TabIndex = 0;
@@ -55,7 +56,7 @@
             // textBox_Target
             // 
             this.textBox_Target.HideSelection = false;
-            this.textBox_Target.Location = new System.Drawing.Point(19, 42);
+            this.textBox_Target.Location = new System.Drawing.Point(19, 28);
             this.textBox_Target.Name = "textBox_Target";
             this.textBox_Target.Size = new System.Drawing.Size(100, 22);
             this.textBox_Target.TabIndex = 1;
@@ -113,17 +114,8 @@
             this.listBox_resultAddress.ItemHeight = 12;
             this.listBox_resultAddress.Location = new System.Drawing.Point(128, 54);
             this.listBox_resultAddress.Name = "listBox_resultAddress";
-            this.listBox_resultAddress.Size = new System.Drawing.Size(51, 328);
+            this.listBox_resultAddress.Size = new System.Drawing.Size(460, 328);
             this.listBox_resultAddress.TabIndex = 49;
-            // 
-            // listBox_resultData
-            // 
-            this.listBox_resultData.FormattingEnabled = true;
-            this.listBox_resultData.ItemHeight = 12;
-            this.listBox_resultData.Location = new System.Drawing.Point(185, 54);
-            this.listBox_resultData.Name = "listBox_resultData";
-            this.listBox_resultData.Size = new System.Drawing.Size(403, 328);
-            this.listBox_resultData.TabIndex = 50;
             // 
             // button_Reset
             // 
@@ -139,7 +131,7 @@
             // 
             this.checkBox_scanCompleted.AutoSize = true;
             this.checkBox_scanCompleted.Enabled = false;
-            this.checkBox_scanCompleted.Location = new System.Drawing.Point(385, 28);
+            this.checkBox_scanCompleted.Location = new System.Drawing.Point(185, 32);
             this.checkBox_scanCompleted.Name = "checkBox_scanCompleted";
             this.checkBox_scanCompleted.Size = new System.Drawing.Size(97, 16);
             this.checkBox_scanCompleted.TabIndex = 52;
@@ -150,30 +142,49 @@
             // 
             this.textBox_addressCount.Enabled = false;
             this.textBox_addressCount.HideSelection = false;
-            this.textBox_addressCount.Location = new System.Drawing.Point(488, 26);
+            this.textBox_addressCount.Location = new System.Drawing.Point(128, 28);
             this.textBox_addressCount.Name = "textBox_addressCount";
-            this.textBox_addressCount.Size = new System.Drawing.Size(100, 22);
+            this.textBox_addressCount.Size = new System.Drawing.Size(51, 22);
             this.textBox_addressCount.TabIndex = 53;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(504, 9);
+            this.label2.Location = new System.Drawing.Point(112, 13);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 12);
+            this.label2.Size = new System.Drawing.Size(85, 12);
             this.label2.TabIndex = 54;
-            this.label2.Text = "Address count";
+            this.label2.Text = "Address Matched";
+            // 
+            // textBox_addressSize
+            // 
+            this.textBox_addressSize.Enabled = false;
+            this.textBox_addressSize.HideSelection = false;
+            this.textBox_addressSize.Location = new System.Drawing.Point(488, 26);
+            this.textBox_addressSize.Name = "textBox_addressSize";
+            this.textBox_addressSize.Size = new System.Drawing.Size(100, 22);
+            this.textBox_addressSize.TabIndex = 55;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(528, 9);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(24, 12);
+            this.label3.TabIndex = 56;
+            this.label3.Text = "Size";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(615, 428);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.textBox_addressSize);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox_addressCount);
             this.Controls.Add(this.checkBox_scanCompleted);
             this.Controls.Add(this.button_Reset);
-            this.Controls.Add(this.listBox_resultData);
             this.Controls.Add(this.listBox_resultAddress);
             this.Controls.Add(this.button_Search);
             this.Controls.Add(this.label25);
@@ -200,11 +211,12 @@
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Button button_Search;
         private System.Windows.Forms.ListBox listBox_resultAddress;
-        private System.Windows.Forms.ListBox listBox_resultData;
         private System.Windows.Forms.Button button_Reset;
         private System.Windows.Forms.CheckBox checkBox_scanCompleted;
         private System.Windows.Forms.TextBox textBox_addressCount;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBox_addressSize;
+        private System.Windows.Forms.Label label3;
     }
 }
 

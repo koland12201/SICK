@@ -46,6 +46,9 @@ namespace MSC_control
         String[] addressMatched = new String[4096];
         String Target="";
         int matchedCount = 0;
+        String addressMax="";
+        bool sFA = false;
+        bool replied = false;
 
         public Form1()
         {
@@ -58,9 +61,9 @@ namespace MSC_control
             //-----------------------------------------------
             //connect
             //-----------------------------------------------
-            string ip = Properties.Settings.Default.ip_set;
+            string ip = "169.254.157.220";//Properties.Settings.Default.ip_set;
             this.textBox1.Text = ip;
-            int port = Convert.ToInt16(Properties.Settings.Default.port_set);
+            int port = Convert.ToInt16("2112");//Properties.Settings.Default.port_set);
             IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse(ip), port);
             client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             try
@@ -77,8 +80,8 @@ namespace MSC_control
 
         private void button_Search_Click(object sender, EventArgs e)
         {
+            button_Search.Enabled= false;
             listBox_resultAddress.Items.Clear();
-            listBox_resultData.Items.Clear();
             checkBox_scanCompleted.Checked = false;
             Target =textBox_Target.Text;
             scanAddress();
@@ -89,29 +92,41 @@ namespace MSC_control
                 {
                     if (string.IsNullOrEmpty(addressTable[i_btnSearch1, i_btnSearch2]))
                         continue;
-                    if (addressTable[i_btnSearch1, i_btnSearch2].ToLowerInvariant().Contains(Target.ToLowerInvariant()))
+                    //if (addressTable[i_btnSearch1, i_btnSearch2].ToLowerInvariant().Contains(Target.ToLowerInvariant())) (fuzzy search)
+                    if (addressTable[i_btnSearch1, i_btnSearch2] == Target)
                     {
                         matchedCount += 1;
                         addressMatched[matchedCount] = i_btnSearch1.ToString("X");
-                        listBox_resultAddress.Items.Add(addressMatched[matchedCount]);
-                        listBox_resultData.Items.Add(addressTable[i_btnSearch1, 2]);
+                        String combinedData = "";
+                        for (int i_btnSearch3 = 0; i_btnSearch3 < 100; i_btnSearch3++)
+                        {
+                            combinedData = combinedData + addressTable[i_btnSearch1, i_btnSearch3] + " ";
+                        }
+                        listBox_resultAddress.Items.Add(addressMatched[matchedCount]+"      "+ combinedData);
+
                     }
                 }
             }
             textBox_addressCount.Text = matchedCount.ToString();
+            button_Search.Enabled = true;
         }
         private void button_Reset_Click(object sender, EventArgs e)
         {
-
+            listBox_resultAddress.Items.Clear();
+            textBox_addressCount.Text = 0.ToString();
+            textBox_addressSize.Text = 0.ToString();
+            Target = "";
+            
         }
         //----------------------------------------------------------------------------------
         //Functions
         //---------------------------------------------------------------------------------
         void scanAddress()
         {
+            sFA = false;
             String strHex = "";
             int i2;
-            for (i2 = 0; i2 <= 4096; i2++)
+            for (i2 = 0; i2 < 4096&&sFA==false; i2++)
             {
                 strHex = i2.ToString("X");
                 String command = "sRI " + strHex;
@@ -123,8 +138,12 @@ namespace MSC_control
                     send[i + 1] = commad_arry[i];
                 }
                 send[command.Length + 1] = 0x03;
+                replied = false;
                 client.Send(send);
-                System.Threading.Thread.Sleep(10);
+                while (replied==false&&sFA==false)
+                {
+                    System.Threading.Thread.Sleep(10);
+                }
             }
             checkBox_scanCompleted.Checked = true;
         }
@@ -141,24 +160,36 @@ namespace MSC_control
 
         }
 
-        void parsedata(String data) 
+        void parsedata(String data)
         {
             String[] _commandArry = data.Split(' ');
-            if ("sRA"==_commandArry[0])
+            switch (_commandArry[0])
             {
-                try
-                {
-                    int addressInt = Convert.ToInt32(_commandArry[1], 16);
-                    int i_pars;
-                    for (i_pars = 0; i_pars <= 100; i_pars++)
+                case "sRA":
+                    try
                     {
-                        addressTable[addressInt, i_pars] = _commandArry[2];
+                        replied = true;
+                        addressMax = _commandArry[1];
+                        int addressInt = Convert.ToInt32(_commandArry[1], 16);
+                        int i_pars;
+                        for (i_pars = 0; i_pars < 100; i_pars++)
+                        {
+                            addressTable[addressInt, i_pars] = _commandArry[i_pars+2];
+                        }
+                        
                     }
-                }
-                catch
-                {
-                    
-                }
+                    catch
+                    {
+
+                    }
+                break;
+                case "sFA":
+                    if (_commandArry[1]=="3")
+                    {
+                        sFA = true;
+                        textBox_addressSize.Text = addressMax;
+                    }
+                break;
             }
         }
 
