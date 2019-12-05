@@ -77,25 +77,28 @@ namespace MSC_control
 
         private void button_Search_Click(object sender, EventArgs e)
         {
+            listBox_resultAddress.Items.Clear();
+            listBox_resultData.Items.Clear();
             checkBox_scanCompleted.Checked = false;
             Target =textBox_Target.Text;
             scanAddress();
             //scan for similaries
-            for (int i_btnSearch1 = 0; i_btnSearch1 <= 4096; i_btnSearch1++)
+            for (int i_btnSearch1 = 0; i_btnSearch1 < 4095; i_btnSearch1++)
             {
-                for (int i_btnSearch2 = 0; i_btnSearch2 <= 100; i_btnSearch2++)
+                for (int i_btnSearch2 = 0; i_btnSearch2 < 1; i_btnSearch2++)
                 {
-                    if (string.IsNullOrEmpty(addressTable[i_btnSearch1,i_btnSearch2]))
+                    if (string.IsNullOrEmpty(addressTable[i_btnSearch1, i_btnSearch2]))
                         continue;
                     if (addressTable[i_btnSearch1, i_btnSearch2].ToLowerInvariant().Contains(Target.ToLowerInvariant()))
                     {
                         matchedCount += 1;
                         addressMatched[matchedCount] = i_btnSearch1.ToString("X");
-                        
+                        listBox_resultAddress.Items.Add(addressMatched[matchedCount]);
+                        listBox_resultData.Items.Add(addressTable[i_btnSearch1, 2]);
                     }
                 }
             }
-
+            textBox_addressCount.Text = matchedCount.ToString();
         }
         private void button_Reset_Click(object sender, EventArgs e)
         {
@@ -121,7 +124,7 @@ namespace MSC_control
                 }
                 send[command.Length + 1] = 0x03;
                 client.Send(send);
-                System.Threading.Thread.Sleep(100);
+                System.Threading.Thread.Sleep(10);
             }
             checkBox_scanCompleted.Checked = true;
         }

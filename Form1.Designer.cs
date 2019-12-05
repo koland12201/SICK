@@ -39,7 +39,7 @@
             this.listBox_resultData = new System.Windows.Forms.ListBox();
             this.button_Reset = new System.Windows.Forms.Button();
             this.checkBox_scanCompleted = new System.Windows.Forms.CheckBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox_addressCount = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -146,14 +146,14 @@
             this.checkBox_scanCompleted.Text = "Scan completed";
             this.checkBox_scanCompleted.UseVisualStyleBackColor = true;
             // 
-            // textBox2
+            // textBox_addressCount
             // 
-            this.textBox2.Enabled = false;
-            this.textBox2.HideSelection = false;
-            this.textBox2.Location = new System.Drawing.Point(488, 26);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 22);
-            this.textBox2.TabIndex = 53;
+            this.textBox_addressCount.Enabled = false;
+            this.textBox_addressCount.HideSelection = false;
+            this.textBox_addressCount.Location = new System.Drawing.Point(488, 26);
+            this.textBox_addressCount.Name = "textBox_addressCount";
+            this.textBox_addressCount.Size = new System.Drawing.Size(100, 22);
+            this.textBox_addressCount.TabIndex = 53;
             // 
             // label2
             // 
@@ -170,7 +170,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(615, 428);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.textBox_addressCount);
             this.Controls.Add(this.checkBox_scanCompleted);
             this.Controls.Add(this.button_Reset);
             this.Controls.Add(this.listBox_resultData);
@@ -203,7 +203,7 @@
         private System.Windows.Forms.ListBox listBox_resultData;
         private System.Windows.Forms.Button button_Reset;
         private System.Windows.Forms.CheckBox checkBox_scanCompleted;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox_addressCount;
         private System.Windows.Forms.Label label2;
     }
 }
