@@ -81,7 +81,7 @@ namespace MSC_control
 
 
             //search address table
-            if (checkBox_Fuzzy.Checked==false)
+            if (checkBox_Contains.Checked==false)
             {
                 //scan for similaries (exact serch)
                 for (int i_btnSearch1 = 0; i_btnSearch1 < 4095; i_btnSearch1++)
@@ -92,7 +92,7 @@ namespace MSC_control
                         if (string.IsNullOrEmpty(addressTable[i_btnSearch1, i_btnSearch2]))
                             continue;
                         //if (addressTable[i_btnSearch1, i_btnSearch2].ToLowerInvariant().Contains(Target.ToLowerInvariant())) (fuzzy search)
-                        if (addressTable[i_btnSearch1, i_btnSearch2] == Target)
+                        if (addressTable[i_btnSearch1, i_btnSearch2] == Target)//exact search
                         {
                             noMatch = false;
                         }
@@ -116,7 +116,7 @@ namespace MSC_control
             }
             else
             {
-                //scan for similaries (fuzzy search)
+                //scan for similaries (contains search)
                 for (int i_btnSearch1 = 0; i_btnSearch1 < 4095; i_btnSearch1++)
                 {
                     noMatch = true;
@@ -124,7 +124,7 @@ namespace MSC_control
                     {
                         if (string.IsNullOrEmpty(addressTable[i_btnSearch1, i_btnSearch2]))
                             continue;
-                        if (addressTable[i_btnSearch1, i_btnSearch2].ToLowerInvariant().Contains(Target.ToLowerInvariant())); //fuzzy search
+                        if (addressTable[i_btnSearch1, i_btnSearch2].Contains(Target)); //contains search
                         {
                             noMatch = false;
                         }

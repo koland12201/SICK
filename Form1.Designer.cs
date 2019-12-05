@@ -43,7 +43,7 @@
             this.textBox_addressSize = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.checkBox_Fuzzy = new System.Windows.Forms.CheckBox();
+            this.checkBox_Contains = new System.Windows.Forms.CheckBox();
             this.button_Connect = new System.Windows.Forms.Button();
             this.textBox_Port = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
@@ -187,15 +187,15 @@
             this.label4.TabIndex = 57;
             this.label4.Text = "Flags";
             // 
-            // checkBox_Fuzzy
+            // checkBox_Contains
             // 
-            this.checkBox_Fuzzy.AutoSize = true;
-            this.checkBox_Fuzzy.Location = new System.Drawing.Point(19, 178);
-            this.checkBox_Fuzzy.Name = "checkBox_Fuzzy";
-            this.checkBox_Fuzzy.Size = new System.Drawing.Size(84, 16);
-            this.checkBox_Fuzzy.TabIndex = 58;
-            this.checkBox_Fuzzy.Text = "Fuzzy search";
-            this.checkBox_Fuzzy.UseVisualStyleBackColor = true;
+            this.checkBox_Contains.AutoSize = true;
+            this.checkBox_Contains.Location = new System.Drawing.Point(19, 178);
+            this.checkBox_Contains.Name = "checkBox_Contains";
+            this.checkBox_Contains.Size = new System.Drawing.Size(65, 16);
+            this.checkBox_Contains.TabIndex = 58;
+            this.checkBox_Contains.Text = "Contains";
+            this.checkBox_Contains.UseVisualStyleBackColor = true;
             // 
             // button_Connect
             // 
@@ -221,7 +221,7 @@
             this.ClientSize = new System.Drawing.Size(1490, 602);
             this.Controls.Add(this.textBox_Port);
             this.Controls.Add(this.button_Connect);
-            this.Controls.Add(this.checkBox_Fuzzy);
+            this.Controls.Add(this.checkBox_Contains);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBox_addressSize);
@@ -262,7 +262,7 @@
         private System.Windows.Forms.TextBox textBox_addressSize;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.CheckBox checkBox_Fuzzy;
+        private System.Windows.Forms.CheckBox checkBox_Contains;
         private System.Windows.Forms.Button button_Connect;
         private System.Windows.Forms.TextBox textBox_Port;
     }
