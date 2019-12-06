@@ -55,3 +55,5 @@ C:\Users\Koland Mak\source\repos\MSC control\MSC control\obj\x86\Debug\MSC contr
 C:\Users\Koland Mak\source\repos\MSC control\MSC control\obj\x86\Debug\MSC control.csproj.CoreCompileInputs.cache
 C:\Users\Koland Mak\source\repos\MSC control\MSC control\obj\x86\Debug\MSC control.exe
 C:\Users\Koland Mak\source\repos\MSC control\MSC control\obj\x86\Debug\MSC control.pdb
+C:\Users\Koland Mak\source\repos\MSC control\MSC control\bin\Debug\NPlotClass.dll
+C:\Users\Koland Mak\source\repos\MSC control\MSC control\obj\x86\Debug\MSC control.csproj.CopyComplete
