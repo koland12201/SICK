@@ -54,7 +54,7 @@ namespace MSC_control
         byte[] bufbar = new byte[10240];
         double[] deg = new double[1000];
         double[] scanData = new double[1000];
-        double dataLength = 0;
+        int dataLength = 0;
         //flags
         bool replied = false;
 
@@ -129,7 +129,7 @@ namespace MSC_control
                 for (int i_para=0;i_para< dataLength; i_para++)
                 {
                     scanData[i_para] = Convert.ToInt32(_commandArry[i_para + 26],16);   //scan data
-                    deg[i_para] =- 225 / 2 + (225 / dataLength)*i_para;                 //scan deg
+                    deg[i_para] =- 225 / 2 + (225 / (float)dataLength)*(float)i_para;                 //scan deg
                 }
                 replied = true;
             }
@@ -167,7 +167,7 @@ namespace MSC_control
                     
                     }
                 }
-                1chart1.Series[0].Points.DataBindXY(deg, scanData);
+                chart1.Series[0].Points.DataBindXY(deg, scanData);
         }
     }
 }
