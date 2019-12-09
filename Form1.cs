@@ -10,51 +10,44 @@ using System.Net.Sockets;
 using System.Net;
 
 /*
- * Address table
- * 0        model number
- * 5F 
- * 71C      current time/date
- * 784      ?array[3] (hex)
- * 785      ?array[3] (int)
- * 81       ?cont. update status (bool)
- * 786      ?array[3] (int)
- * 88       ?cont. update status (bool)
- * 787      ?array[3] (int)
- * 89       ?cont. update status (bool)
- * 78E      ?array[3] (hex)
- * 8A       ?cont. update status (bool)
- * 78F      ?array[3] (int)
- * 8B       ?cont. update status (bool)
- * 790      ?array[3] (int)
- * 8C       ?cont. update status (bool)
- * 791      ?array[3] (int)
- * 8D       ?cont. update status (bool)
- * 792      ?array[3] (int)
- * 8E       ?cont. update status (bool)
- * 793      ?array[3] (int)
- * 8F       ?cont. update status (bool)
- * 794      ?array[3] (hex)
- * 90       ?cont. update status (bool)
+ * addressTable array default
+ * [000]    [000's content 1]   [000's content 2] ...  ... [000's content 100]
+ * [001]
+ * [002]
+ * ...
+ * ...
+ * [FFF]
+ * 
+ * addressMatched array default
+ * [000]
+ * [001]
+ * ...
+ * ...
+ * [FFF]
  */
 namespace MSC_control
 {
     public partial class Form1 : Form
     {
+        //TCP params------------------------------------------------------------------
         Socket client;//socket
         byte[] bufbar = new byte[10240];
 
-        //searching params-------------------------------------------------------------
+        //searching vars--------------------------------------------------------------
         String[,] addressTable = new String[4096,100]; //4096: FFF, 100: data received
-        String[] addressMatched = new String[4096];
-        String Target="";
-        int matchedCount = 0;
-        String addressMax="";
+        String[] addressMatched = new String[4096];    //defaults to 000-FFF, to Null if content not matched
+        String Target="";                              //entered target
+        int matchedCount = 0;                          //matched address count
+        String addressMax="";                          //highest address of that given device
 
         //flags-----------------------------------------------------------------------
-        bool sFA = false;       //sFA 3 returned, max address reached
-        bool replied = false;   //replied to previous commnad, ready to send another
-        bool noMatch = true;    //entire address doesnt contain target value 
+        bool sFA = false;                             //sFA 3 returned, max address reached
+        bool replied = false;                         //replied to previous commnad, ready to send another
+        bool noMatch = true;                          //entire address doesnt contain target value 
 
+        //----------------------------------------------------------------------------
+        //forms and buttons
+        //----------------------------------------------------------------------------
         public Form1()
         {
             InitializeComponent();
@@ -63,15 +56,15 @@ namespace MSC_control
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            textBox_Port.Text = "2112";
-            //initalize addressMatched, assume 0-4095 matched
-            for(int i_load=0;i_load<=4095;i_load++)
+            textBox_Port.Text = "2112";//defalut port
+            
+            for(int i_load=0;i_load<=4095;i_load++) //initalize addressMatched, assume 0-4095 matched
             {
                 addressMatched[i_load] = i_load.ToString("X");
             }
         }
 
-        private void button_Search_Click(object sender, EventArgs e)
+        private void button_Search_Click(object sender, EventArgs e)  //compares each respond output from addressTable
         {
             button_Search.Enabled= false;
             listBox_resultAddress.Items.Clear();
@@ -91,7 +84,6 @@ namespace MSC_control
                     {
                         if (string.IsNullOrEmpty(addressTable[i_btnSearch1, i_btnSearch2]))
                             continue;
-                        //if (addressTable[i_btnSearch1, i_btnSearch2].ToLowerInvariant().Contains(Target.ToLowerInvariant())) (fuzzy search)
                         if (addressTable[i_btnSearch1, i_btnSearch2] == Target)//exact search
                         {
                             noMatch = false;
@@ -149,7 +141,7 @@ namespace MSC_control
             textBox_addressCount.Text = matchedCount.ToString();
             button_Search.Enabled = true;
         }
-        private void button_Reset_Click(object sender, EventArgs e)
+        private void button_Reset_Click(object sender, EventArgs e) //resets search results, intialize search array
         {
             clearTable();
             //initalize addressMatched, assume 0-4095 matched
@@ -163,6 +155,28 @@ namespace MSC_control
             Target = "";
             
         }
+
+        private void button_Connect_Click(object sender, EventArgs e) //connect with entered IP/Port        
+        {
+            //-----------------------------------------------
+            //connect to ip
+            //-----------------------------------------------
+            string ip = textBox_IP.Text;//Properties.Settings.Default.ip_set;
+            this.textBox_IP.Text = ip;
+            int port = Convert.ToInt16(textBox_Port.Text);//Properties.Settings.Default.port_set);
+            IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse(ip), port);
+            client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            try
+            {
+                client.Connect(endpoint);//connect to server
+                client.BeginReceive(bufbar, 0, bufbar.Length, SocketFlags.None, new AsyncCallback(dataReceive), client);
+                this.label24.Text = "已经连接";
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         //----------------------------------------------------------------------------------
         //Functions
         //---------------------------------------------------------------------------------
@@ -173,7 +187,7 @@ namespace MSC_control
             int i2;
             for (i2 = 0; i2 <= 4095; i2++)
             {
-                while(addressMatched[i2]==null)
+                while(addressMatched[i2]==null) //skip addresses that does not match in previous searches
                 {
                     i2++;
                 }
@@ -190,7 +204,7 @@ namespace MSC_control
                 client.Send(send);
                 while (replied == false && sFA == false)
                 {
-                    System.Threading.Thread.Sleep(10);
+                    System.Threading.Thread.Sleep(10);//assuming ping: < 10ms
                 }
             }
             checkBox_scanCompleted.Checked = true;
@@ -263,27 +277,7 @@ namespace MSC_control
             }
         }
 
-        private void button_Connect_Click(object sender, EventArgs e)
-        {
-            //-----------------------------------------------
-            //connect
-            //-----------------------------------------------
-            string ip = textBox_IP.Text;//Properties.Settings.Default.ip_set;
-            this.textBox_IP.Text = ip;
-            int port = Convert.ToInt16(textBox_Port.Text);//Properties.Settings.Default.port_set);
-            IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse(ip), port);
-            client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            try
-            {
-                client.Connect(endpoint);//connect to server
-                client.BeginReceive(bufbar, 0, bufbar.Length, SocketFlags.None, new AsyncCallback(dataReceive), client);
-                this.label24.Text = "已经连接";
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+
     }
 }
 
