@@ -46,6 +46,9 @@
             this.checkBox_Contains = new System.Windows.Forms.CheckBox();
             this.button_Connect = new System.Windows.Forms.Button();
             this.textBox_Port = new System.Windows.Forms.TextBox();
+            this.textBox_Send = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.listBox_Receive = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // label1
@@ -69,18 +72,18 @@
             // 
             this.label23.AutoSize = true;
             this.label23.Enabled = false;
-            this.label23.Location = new System.Drawing.Point(5, 571);
+            this.label23.Location = new System.Drawing.Point(1022, 29);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(59, 12);
+            this.label23.Size = new System.Drawing.Size(62, 12);
             this.label23.TabIndex = 40;
-            this.label23.Text = "connection:";
+            this.label23.Text = "Connection:";
             // 
             // label24
             // 
             this.label24.AutoSize = true;
             this.label24.Enabled = false;
             this.label24.ForeColor = System.Drawing.Color.Red;
-            this.label24.Location = new System.Drawing.Point(62, 572);
+            this.label24.Location = new System.Drawing.Point(1087, 28);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(41, 12);
             this.label24.TabIndex = 41;
@@ -88,15 +91,16 @@
             // 
             // textBox_IP
             // 
-            this.textBox_IP.Location = new System.Drawing.Point(147, 568);
+            this.textBox_IP.Location = new System.Drawing.Point(1165, 25);
             this.textBox_IP.Name = "textBox_IP";
             this.textBox_IP.Size = new System.Drawing.Size(175, 22);
             this.textBox_IP.TabIndex = 46;
+            this.textBox_IP.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_IP_KeyDown);
             // 
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(126, 573);
+            this.label25.Location = new System.Drawing.Point(1144, 30);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(18, 12);
             this.label25.TabIndex = 47;
@@ -199,7 +203,7 @@
             // 
             // button_Connect
             // 
-            this.button_Connect.Location = new System.Drawing.Point(391, 568);
+            this.button_Connect.Location = new System.Drawing.Point(1409, 25);
             this.button_Connect.Name = "button_Connect";
             this.button_Connect.Size = new System.Drawing.Size(66, 22);
             this.button_Connect.TabIndex = 59;
@@ -209,16 +213,46 @@
             // 
             // textBox_Port
             // 
-            this.textBox_Port.Location = new System.Drawing.Point(328, 568);
+            this.textBox_Port.Location = new System.Drawing.Point(1346, 25);
             this.textBox_Port.Name = "textBox_Port";
             this.textBox_Port.Size = new System.Drawing.Size(57, 22);
             this.textBox_Port.TabIndex = 60;
+            // 
+            // textBox_Send
+            // 
+            this.textBox_Send.HideSelection = false;
+            this.textBox_Send.Location = new System.Drawing.Point(53, 796);
+            this.textBox_Send.Name = "textBox_Send";
+            this.textBox_Send.Size = new System.Drawing.Size(1429, 22);
+            this.textBox_Send.TabIndex = 61;
+            this.textBox_Send.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_Send_KeyDown);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(17, 799);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(34, 12);
+            this.label5.TabIndex = 62;
+            this.label5.Text = "Send :";
+            // 
+            // listBox_Receive
+            // 
+            this.listBox_Receive.FormattingEnabled = true;
+            this.listBox_Receive.ItemHeight = 12;
+            this.listBox_Receive.Location = new System.Drawing.Point(53, 579);
+            this.listBox_Receive.Name = "listBox_Receive";
+            this.listBox_Receive.Size = new System.Drawing.Size(1429, 208);
+            this.listBox_Receive.TabIndex = 64;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1490, 600);
+            this.ClientSize = new System.Drawing.Size(1490, 830);
+            this.Controls.Add(this.listBox_Receive);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.textBox_Send);
             this.Controls.Add(this.textBox_Port);
             this.Controls.Add(this.button_Connect);
             this.Controls.Add(this.checkBox_Contains);
@@ -265,6 +299,9 @@
         private System.Windows.Forms.CheckBox checkBox_Contains;
         private System.Windows.Forms.Button button_Connect;
         private System.Windows.Forms.TextBox textBox_Port;
+        private System.Windows.Forms.TextBox textBox_Send;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ListBox listBox_Receive;
     }
 }
 

@@ -41,9 +41,10 @@ namespace MSC_control
         String addressMax="";                          //highest address of that given device
 
         //flags-----------------------------------------------------------------------
-        bool sFA = false;                             //sFA 3 returned, max address reached
+        bool sFA = true;                              //sFA 3 returned, max address reached
         bool replied = false;                         //replied to previous commnad, ready to send another
         bool noMatch = true;                          //entire address doesnt contain target value 
+        bool Searching = false;                         //state of searcher
 
         //----------------------------------------------------------------------------
         //forms and buttons
@@ -66,12 +67,15 @@ namespace MSC_control
 
         private void button_Search_Click(object sender, EventArgs e)  //compares each respond output from addressTable
         {
+            //init search
+            Searching = true;
+            textBox_Send.Enabled = false; //disables send command
             button_Search.Enabled= false;
             listBox_resultAddress.Items.Clear();
             checkBox_scanCompleted.Checked = false;
             Target =textBox_Target.Text;
-            scanAddress();
 
+            scanAddress();//send command loop
 
             //search address table
             if (checkBox_Contains.Checked==false)
@@ -138,6 +142,8 @@ namespace MSC_control
             }
             textBox_addressCount.Text = matchedCount.ToString();
             button_Search.Enabled = true;
+            textBox_Send.Enabled = true; //re-enable send command
+            Searching = false;
         }
         private void button_Reset_Click(object sender, EventArgs e) //resets search results, intialize search array
         {
@@ -151,7 +157,6 @@ namespace MSC_control
             textBox_addressCount.Text = 0.ToString();
             textBox_addressSize.Text = 0.ToString();
             Target = "";
-            
         }
 
         private void button_Connect_Click(object sender, EventArgs e) //connect with entered IP/Port        
@@ -173,6 +178,23 @@ namespace MSC_control
             catch (Exception)
             {
                 throw;
+            }
+        }
+
+        private void textBox_IP_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                Properties.Settings.Default.ip_set = textBox_IP.Text;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        private void textBox_Send_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                sendCommand(textBox_Send.Text);
             }
         }
         //----------------------------------------------------------------------------------
@@ -207,6 +229,20 @@ namespace MSC_control
             }
             checkBox_scanCompleted.Checked = true;
         }
+       
+        void sendCommand(String command)    //send command without flags
+        {
+            Byte[] commad_arry = Encoding.UTF8.GetBytes(command);
+            Byte[] send = new Byte[command.Length + 2];
+            send[0] = 0x02;
+            for (int i = 0; i < command.Length; i++)
+            {
+                send[i + 1] = commad_arry[i];
+            }
+            send[command.Length + 1] = 0x03;
+            replied = false;
+            client.Send(send);
+        }
 
         void clearTable()
         {
@@ -229,7 +265,15 @@ namespace MSC_control
             string _context = "";
             _context = Encoding.GetEncoding("gb2312").GetString(bufbar, 1, count - 2);
             parsedata(_context);
-
+            if (Searching == false) //receive commands only when not sending command
+            {
+                listBox_Receive.Items.Add(_context);
+            }
+            if (listBox_Receive.Items.Count > 17)
+            {
+                listBox_Receive.Items.RemoveAt(0);
+        
+            }
         }
 
         void parsedata(String data)
@@ -264,18 +308,6 @@ namespace MSC_control
                 break;
             }
         }
-
-        private void textBox1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyData == Keys.Enter)
-            {
-                Properties.Settings.Default.ip_set = textBox_IP.Text;
-                Properties.Settings.Default.Save();
-
-            }
-        }
-
-
     }
 }
 
