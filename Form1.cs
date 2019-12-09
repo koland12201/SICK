@@ -52,9 +52,9 @@ namespace MSC_control
     {
         Socket client;//socket
         byte[] bufbar = new byte[10240];
-        int[] X = new int[1000];
+        double[] deg = new double[1000];
         double[] scanData = new double[1000];
-        int dataLength = 0;
+        double dataLength = 0;
         //flags
         bool replied = false;
 
@@ -125,10 +125,11 @@ namespace MSC_control
             if (_commandArry[0] == "sRA"&&_commandArry[1]== "LMDscandata")
             {
                 dataLength = Convert.ToInt32(_commandArry[25], 16);
+                //collect scan data Y axis
                 for (int i_para=0;i_para< dataLength; i_para++)
                 {
-                    scanData[i_para] = Convert.ToInt32(_commandArry[i_para + 26],16);
-                    X[i_para] = i_para;
+                    scanData[i_para] = Convert.ToInt32(_commandArry[i_para + 26],16);   //scan data
+                    deg[i_para] =- 225 / 2 + (225 / dataLength)*i_para;                 //scan deg
                 }
                 replied = true;
             }
@@ -153,19 +154,20 @@ namespace MSC_control
                 {
                     System.Threading.Thread.Sleep(10);
                 }
-
+                //data processing
                 for (int i_btn=0; i_btn<= dataLength; i_btn++)
                 {
-                    if(i_btn<dataLength/2)
+                    if(deg[i_btn]<0)
                     {
-                       
+                        
+                        scanData[i_btn] = scanData[i_btn] * Math.Asin((225/2)-deg[i_btn]);
                     }
-                    else if(i_btn> dataLength / 2)
+                    else if(deg[i_btn]> 0)
                     {
                     
                     }
                 }
-                chart1.Series[0].Points.DataBindXY(X, scanData);
+                1chart1.Series[0].Points.DataBindXY(deg, scanData);
         }
     }
 }
