@@ -86,9 +86,8 @@ namespace MSC_control
                             continue;
                         if (addressTable[i_btnSearch1, i_btnSearch2] == Target)//exact search
                         {
-                            noMatch = false;
+                            noMatch = false;    //set no match flag to false, match found
                         }
-
                     }
                     if (noMatch == true)
                     {
@@ -116,11 +115,10 @@ namespace MSC_control
                     {
                         if (string.IsNullOrEmpty(addressTable[i_btnSearch1, i_btnSearch2]))
                             continue;
-                        if (addressTable[i_btnSearch1, i_btnSearch2].Contains(Target)); //contains search
+                        if (addressTable[i_btnSearch1, i_btnSearch2].Contains(Target))//contains search
                         {
-                            noMatch = false;
+                            noMatch = false;    //set no match flag to false, match found
                         }
-
                     }
                     if (noMatch == true)
                     {
