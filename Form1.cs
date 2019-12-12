@@ -67,7 +67,7 @@ namespace MSC_control
         private void Form1_Load(object sender, EventArgs e)
         {
 
-            string ip = Properties.Settings.Default.ip_set;
+            string ip = "192.168.1.49";// Properties.Settings.Default.ip_set;
             this.textBox1.Text = ip;
 
             int port = Convert.ToInt16(Properties.Settings.Default.port_set);
@@ -129,7 +129,7 @@ namespace MSC_control
                 for (int i_para=0;i_para< dataLength; i_para++)
                 {
                     scanData[i_para] = Convert.ToInt32(_commandArry[i_para + 26],16);   //scan data
-                    deg[i_para] =- 225 / 2 + (225 / (float)dataLength)*(float)i_para;                 //scan deg
+                    deg[i_para] =- 185 / 2 + (185 / (float)dataLength)*(float)i_para;                 //scan deg
                 }
                 replied = true;
             }
@@ -154,17 +154,16 @@ namespace MSC_control
                 {
                     System.Threading.Thread.Sleep(10);
                 }
-                //data processing
+            //data processing
                 for (int i_btn=0; i_btn<= dataLength; i_btn++)
                 {
                     if(deg[i_btn]<0)
                     {
-                        
-                        scanData[i_btn] = scanData[i_btn] * Math.Asin((225/2)-deg[i_btn]);
+                        scanData[i_btn] = scanData[i_btn] * Math.Sin(Math.PI * (90.0 - deg[i_btn]) / 180);
                     }
                     else if(deg[i_btn]> 0)
                     {
-                    
+                        scanData[i_btn] = scanData[i_btn] * Math.Sin(Math.PI * (90.0 - deg[i_btn]) / 180);
                     }
                 }
                 chart1.Series[0].Points.DataBindXY(deg, scanData);
