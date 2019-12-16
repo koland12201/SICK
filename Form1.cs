@@ -9,6 +9,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Net.Sockets;
 using System.Net;
+
 /*data stream
  *Example            def
  *<STX>              -1        Header
@@ -47,7 +48,7 @@ using System.Net;
  *<ETX>             845        checksum
  */
 
- // Device 1(driver) , 2(scanner)
+// Device 1(driver) , 2(scanner)
 namespace MSC_control
 {
     public partial class Form1 : Form
@@ -57,6 +58,7 @@ namespace MSC_control
         double[] deg = new double[1000];
         double[] scanData = new double[1000];
         int dataLength = 0;
+
         //flags
         bool replied = false;
 
@@ -76,23 +78,129 @@ namespace MSC_control
 
         }
 
-        void dataReceive(IAsyncResult ia)
+        //-------------------------------------------------------------------------
+        //buttons and inputs
+        //-------------------------------------------------------------------------
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                Properties.Settings.Default.ip_set = textBox_Ip2.Text;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        private void button_Scan_Click(object sender, EventArgs e)
+        {
+            replied = false;
+            sendCommand_driver("ACT EN1");
+            sendCommand_driver("SET "+trackBar_Inital.Value.ToString()+" "+trackBar_Final.Value.ToString()+" "+trackBar_Velocity.Value.ToString());
+           
+            sendCommand_driver("ACT St");
+            chart1.Series[0].Points.Clear();
+            sendCommand_sensor("sRN LMDscandata 0");               //request scan data once
+            //while (replied == false)
+            //{
+              //  System.Threading.Thread.Sleep(10);
+            //}
+            //data processing
+            for (int i_btn = 0; i_btn <= dataLength; i_btn++)
+            {
+                if (deg[i_btn] < 0)
+                {
+                    scanData[i_btn] = scanData[i_btn] * Math.Sin(Math.PI * (90.0 - deg[i_btn]) / 180);
+                }
+                else if (deg[i_btn] > 0)
+                {
+                    scanData[i_btn] = scanData[i_btn] * Math.Sin(Math.PI * (90.0 - deg[i_btn]) / 180);
+                }
+            }
+            chart1.Series[0].Points.DataBindXY(deg, scanData);
+        }
+
+        private void button_Connect_Click(object sender, EventArgs e)
+        {
+            int port = Convert.ToInt16(this.textBox_Port.Text);
+            IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse(this.textBox_Ip.Text), port);
+            client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            try
+            {
+                client.Connect(endpoint);//connect to server
+                client.BeginReceive(bufbar, 0, bufbar.Length, SocketFlags.None, new AsyncCallback(dataReceive_driver), client);
+                //start heartbeat thread
+                System.Threading.ThreadStart HB_Start = Heartbeat;
+                Thread HB_thread = new Thread(HB_Start);
+                HB_thread.Start();
+                HB_thread.IsBackground = true;
+                checkBox_Connection1.Checked = true;
+            }
+            catch (Exception)
+            {
+                // throw;
+            }
+            int port2 = Convert.ToInt16(this.textBox_Port2.Text);
+            IPEndPoint endpoint2 = new IPEndPoint(IPAddress.Parse(this.textBox_Ip2.Text), port2);
+            client2 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            try
+            {
+                client2.Connect(endpoint2);//connect to server
+                client2.BeginReceive(bufbar, 0, bufbar.Length, SocketFlags.None, new AsyncCallback(dataReceive_sensor), client2);
+
+                checkBox_Connection2.Checked = true;
+            }
+            catch (Exception)
+            {
+                // throw;
+            }
+
+            //init
+            //sendCommand_Sensor("sMN SetAccessMode 03 F4724744");   //login
+            //sendCommand("sMI 3E");                          //enable scan, 3F to disable
+            //sendCommand("sMI 2");                           //logout, run
+        }
+
+        //---------------------------------------------------------------------------
+        //functions
+        //---------------------------------------------------------------------------
+
+        void dataReceive_driver(IAsyncResult ia)
         {
             client = ia.AsyncState as Socket;
 
             int count = client.EndReceive(ia);
 
-            client.BeginReceive(bufbar, 0, bufbar.Length, SocketFlags.None, new AsyncCallback(dataReceive), client);
+            client.BeginReceive(bufbar, 0, bufbar.Length, SocketFlags.None, new AsyncCallback(dataReceive_driver), client);
 
             string _context = "";
             _context = Encoding.GetEncoding("gb2312").GetString(bufbar, 1, count - 2);
-            parsedata(_context);
-
+            parsedata_driver(_context);
         }
 
-        void sendCommand(String command,int DeviceID)
+
+        void dataReceive_sensor(IAsyncResult ia)
+        {
+            client2 = ia.AsyncState as Socket;
+
+            int count = client2.EndReceive(ia);
+
+            client2.BeginReceive(bufbar, 0, bufbar.Length, SocketFlags.None, new AsyncCallback(dataReceive_sensor), client2);
+
+            string _context = "";
+            _context = Encoding.GetEncoding("gb2312").GetString(bufbar, 1, count - 2);
+            parsedata_sensor(_context);
+        }
+
+        void sendCommand_driver(String command)
         {
             Byte[] commad_arry = Encoding.UTF8.GetBytes(command);
+            client.Send(commad_arry);
+            System.Threading.Thread.Sleep(10);
+        }
+
+        void sendCommand_sensor(String command)
+        {
+            Byte [] commad_arry = Encoding.UTF8.GetBytes(command);
             Byte[] send = new Byte[command.Length + 2];
             send[0] = 0x02;
             for (int i = 0; i < command.Length; i++)
@@ -100,18 +208,11 @@ namespace MSC_control
                 send[i + 1] = commad_arry[i];
             }
             send[command.Length + 1] = 0x03;
-            if (DeviceID == 1)
-            {
-                client.Send(send);
-            }
-            else if(DeviceID==2)
-            {
-                client2.Send(send);
-            }
+            client2.Send(send);
             System.Threading.Thread.Sleep(10);
         }
 
-        void parsedata(String data) 
+        void parsedata_driver(String data) 
         {
             String[] _commandArry = data.Split(' ');
             if (_commandArry[0] == "sRA"&&_commandArry[1]== "LMDscandata")
@@ -127,87 +228,33 @@ namespace MSC_control
             }
         }
 
-        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        void parsedata_sensor(String data)
         {
-            if (e.KeyData==Keys.Enter)
+            String[] _commandArry = data.Split(' ');
+            if (_commandArry[0] == "sRA" && _commandArry[1] == "LMDscandata")
             {
-                Properties.Settings.Default.ip_set = textBox_Ip2.Text;
-                Properties.Settings.Default.Save();
-            }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-                replied = false;
-                chart1.Series[0].Points.Clear();
-                sendCommand("sRN LMDscandata 0",2);               //request scan data once
-                while (replied == false)
+                dataLength = Convert.ToInt32(_commandArry[25], 16);
+                //collect scan data Y axis
+                for (int i_para = 0; i_para < dataLength; i_para++)
                 {
-                    System.Threading.Thread.Sleep(10);
+                    scanData[i_para] = Convert.ToInt32(_commandArry[i_para + 26], 16);   //scan data
+                    deg[i_para] = -185 / 2 + (185 / (float)dataLength) * (float)i_para;                 //scan deg
                 }
-            //data processing
-                for (int i_btn=0; i_btn<= dataLength; i_btn++)
-                {
-                    if(deg[i_btn]<0)
-                    {
-                        scanData[i_btn] = scanData[i_btn] * Math.Sin(Math.PI * (90.0 - deg[i_btn]) / 180);
-                    }
-                    else if(deg[i_btn]> 0)
-                    {
-                        scanData[i_btn] = scanData[i_btn] * Math.Sin(Math.PI * (90.0 - deg[i_btn]) / 180);
-                    }
-                }
-                chart1.Series[0].Points.DataBindXY(deg, scanData);
+                replied = true;
+            }
         }
 
-        private void button_Connect_Click(object sender, EventArgs e)
+        private void button_clrErr_Click(object sender, EventArgs e)
         {
-
-
-            int port = Convert.ToInt16(this.textBox_Port.Text);
-            IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse(this.textBox_Ip.Text), port);
-            client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            try
-            {
-                client.Connect(endpoint);//connect to server
-                client.BeginReceive(bufbar, 0, bufbar.Length, SocketFlags.None, new AsyncCallback(dataReceive), client);
-                //start heartbeat thread
-                System.Threading.ThreadStart HB_Start = Heartbeat;
-                Thread HB_thread = new Thread(HB_Start);
-                HB_thread.Start();
-                checkBox_Connection1.Checked = true;
-            }
-            catch (Exception)
-            {
-                // throw;
-            }
-            int port2 = Convert.ToInt16(this.textBox_Port2.Text);
-            IPEndPoint endpoint2 = new IPEndPoint(IPAddress.Parse(this.textBox_Ip2.Text), port2);
-            client2 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            try
-            {
-                client2.Connect(endpoint2);//connect to server
-                client2.BeginReceive(bufbar, 0, bufbar.Length, SocketFlags.None, new AsyncCallback(dataReceive), client2);
-
-                checkBox_Connection2.Checked = true;
-            }
-            catch (Exception)
-            {
-                // throw;
-            }
-            
-            //init
-            sendCommand("sMN SetAccessMode 03 F4724744",2);   //login
-            sendCommand("sMI 3E",2);                          //enable scan, 3F to disable
-            sendCommand("sMI 2",2);                           //logout, run
+            sendCommand_driver("ERR CLR");
         }
+
         private void Heartbeat()
         {
             while (true)
             {
-                sendCommand("HB", 1);
-                System.Threading.Thread.Sleep(5000);
+                sendCommand_driver("HB");
+                System.Threading.Thread.Sleep(2000);
             }
         }
     }
