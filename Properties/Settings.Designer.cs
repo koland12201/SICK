@@ -25,18 +25,6 @@ namespace MSC_control.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("169.254.157.54")]
-        public string ip_set {
-            get {
-                return ((string)(this["ip_set"]));
-            }
-            set {
-                this["ip_set"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("2112")]
         public string port_set {
             get {
@@ -44,6 +32,18 @@ namespace MSC_control.Properties {
             }
             set {
                 this["port_set"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.1.247")]
+        public string ip_set {
+            get {
+                return ((string)(this["ip_set"]));
+            }
+            set {
+                this["ip_set"] = value;
             }
         }
     }

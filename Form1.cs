@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -46,11 +47,12 @@ using System.Net;
  *<ETX>             845        checksum
  */
 
+ // Device 1(driver) , 2(scanner)
 namespace MSC_control
 {
     public partial class Form1 : Form
     {
-        Socket client;//socket
+        Socket client, client2;//socket
         byte[] bufbar = new byte[10240];
         double[] deg = new double[1000];
         double[] scanData = new double[1000];
@@ -66,37 +68,21 @@ namespace MSC_control
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
-            string ip = "192.168.1.49";// Properties.Settings.Default.ip_set;
-            this.textBox1.Text = ip;
-
-            int port = Convert.ToInt16(Properties.Settings.Default.port_set);
-            IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse(ip), port);
-            client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            try
-            {
-                client.Connect(endpoint);//connect to server
-                client.BeginReceive(bufbar, 0, bufbar.Length, SocketFlags.None, new AsyncCallback(dataReceive), client);
-
-            }
-            catch (Exception)
-            {
-               // throw;
-            }
-            //init
-            sendCommand("sMN SetAccessMode 03 F4724744");   //login
-            sendCommand("sMI 3E");                          //enable scan, 3F to disable
-            sendCommand("sMI 2");                           //logout, run
+            //default ips
+            this.textBox_Ip.Text = "192.168.0.10";
+            this.textBox_Ip2.Text = "192.168.0.7";
+            this.textBox_Port.Text = "5000";
+            this.textBox_Port2.Text = "2111";
 
         }
 
         void dataReceive(IAsyncResult ia)
         {
             client = ia.AsyncState as Socket;
+
             int count = client.EndReceive(ia);
 
             client.BeginReceive(bufbar, 0, bufbar.Length, SocketFlags.None, new AsyncCallback(dataReceive), client);
-
 
             string _context = "";
             _context = Encoding.GetEncoding("gb2312").GetString(bufbar, 1, count - 2);
@@ -104,7 +90,7 @@ namespace MSC_control
 
         }
 
-        void sendCommand(String command)
+        void sendCommand(String command,int DeviceID)
         {
             Byte[] commad_arry = Encoding.UTF8.GetBytes(command);
             Byte[] send = new Byte[command.Length + 2];
@@ -114,8 +100,14 @@ namespace MSC_control
                 send[i + 1] = commad_arry[i];
             }
             send[command.Length + 1] = 0x03;
-
-            client.Send(send);
+            if (DeviceID == 1)
+            {
+                client.Send(send);
+            }
+            else if(DeviceID==2)
+            {
+                client2.Send(send);
+            }
             System.Threading.Thread.Sleep(10);
         }
 
@@ -139,7 +131,7 @@ namespace MSC_control
         {
             if (e.KeyData==Keys.Enter)
             {
-                Properties.Settings.Default.ip_set = textBox1.Text;
+                Properties.Settings.Default.ip_set = textBox_Ip2.Text;
                 Properties.Settings.Default.Save();
             }
         }
@@ -149,7 +141,7 @@ namespace MSC_control
 
                 replied = false;
                 chart1.Series[0].Points.Clear();
-                sendCommand("sRN LMDscandata 0");               //request scan data once
+                sendCommand("sRN LMDscandata 0",2);               //request scan data once
                 while (replied == false)
                 {
                     System.Threading.Thread.Sleep(10);
@@ -167,6 +159,56 @@ namespace MSC_control
                     }
                 }
                 chart1.Series[0].Points.DataBindXY(deg, scanData);
+        }
+
+        private void button_Connect_Click(object sender, EventArgs e)
+        {
+
+
+            int port = Convert.ToInt16(this.textBox_Port.Text);
+            IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse(this.textBox_Ip.Text), port);
+            client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            try
+            {
+                client.Connect(endpoint);//connect to server
+                client.BeginReceive(bufbar, 0, bufbar.Length, SocketFlags.None, new AsyncCallback(dataReceive), client);
+                //start heartbeat thread
+                System.Threading.ThreadStart HB_Start = Heartbeat;
+                Thread HB_thread = new Thread(HB_Start);
+                HB_thread.Start();
+                checkBox_Connection1.Checked = true;
+            }
+            catch (Exception)
+            {
+                // throw;
+            }
+            int port2 = Convert.ToInt16(this.textBox_Port2.Text);
+            IPEndPoint endpoint2 = new IPEndPoint(IPAddress.Parse(this.textBox_Ip2.Text), port2);
+            client2 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            try
+            {
+                client2.Connect(endpoint2);//connect to server
+                client2.BeginReceive(bufbar, 0, bufbar.Length, SocketFlags.None, new AsyncCallback(dataReceive), client2);
+
+                checkBox_Connection2.Checked = true;
+            }
+            catch (Exception)
+            {
+                // throw;
+            }
+            
+            //init
+            sendCommand("sMN SetAccessMode 03 F4724744",2);   //login
+            sendCommand("sMI 3E",2);                          //enable scan, 3F to disable
+            sendCommand("sMI 2",2);                           //logout, run
+        }
+        private void Heartbeat()
+        {
+            while (true)
+            {
+                sendCommand("HB", 1);
+                System.Threading.Thread.Sleep(5000);
+            }
         }
     }
 }

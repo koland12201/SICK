@@ -2,11 +2,11 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MSC_control.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ip_set" Type="System.String" Scope="User">
-      <Value Profile="(Default)">169.254.157.54</Value>
-    </Setting>
     <Setting Name="port_set" Type="System.String" Scope="User">
       <Value Profile="(Default)">2112</Value>
+    </Setting>
+    <Setting Name="ip_set" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.1.247</Value>
     </Setting>
   </Settings>
 </SettingsFile>
