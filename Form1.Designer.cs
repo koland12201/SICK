@@ -30,9 +30,9 @@ namespace MSC_control
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.textBox_Ip2 = new System.Windows.Forms.TextBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.button_scan = new System.Windows.Forms.Button();
@@ -67,16 +67,16 @@ namespace MSC_control
             // 
             // chart1
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
             this.chart1.Location = new System.Drawing.Point(12, 12);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(1125, 599);
             this.chart1.TabIndex = 48;
             this.chart1.Text = "chart1";
@@ -135,16 +135,16 @@ namespace MSC_control
             // 
             this.trackBar_Velocity.Location = new System.Drawing.Point(1270, 144);
             this.trackBar_Velocity.Maximum = 50;
-            this.trackBar_Velocity.Minimum = 1;
+            this.trackBar_Velocity.Minimum = 10;
             this.trackBar_Velocity.Name = "trackBar_Velocity";
             this.trackBar_Velocity.Size = new System.Drawing.Size(238, 45);
             this.trackBar_Velocity.TabIndex = 58;
-            this.trackBar_Velocity.Value = 1;
+            this.trackBar_Velocity.Value = 50;
             // 
             // trackBar_Final
             // 
             this.trackBar_Final.Location = new System.Drawing.Point(1270, 93);
-            this.trackBar_Final.Maximum = 200;
+            this.trackBar_Final.Maximum = 230;
             this.trackBar_Final.Name = "trackBar_Final";
             this.trackBar_Final.Size = new System.Drawing.Size(238, 45);
             this.trackBar_Final.TabIndex = 59;
@@ -152,7 +152,7 @@ namespace MSC_control
             // trackBar_Inital
             // 
             this.trackBar_Inital.Location = new System.Drawing.Point(1270, 42);
-            this.trackBar_Inital.Maximum = 200;
+            this.trackBar_Inital.Maximum = 230;
             this.trackBar_Inital.Name = "trackBar_Inital";
             this.trackBar_Inital.Size = new System.Drawing.Size(238, 45);
             this.trackBar_Inital.TabIndex = 60;

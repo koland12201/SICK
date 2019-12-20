@@ -60,7 +60,8 @@ namespace MSC_control
         int dataLength = 0;
 
         //flags
-        bool replied = false;
+        bool replied_driver = false;
+        bool replied_sensor = false;
 
         public Form1()
         {
@@ -93,9 +94,18 @@ namespace MSC_control
 
         private void button_Scan_Click(object sender, EventArgs e)
         {
-            replied = false;
+            string SetA, SetB, SetV;
+            replied_sensor = false;
+            replied_driver = false;
+
+            //encode Int data to ASCII
+            SetA = intToASCIIcmd(trackBar_Inital.Value);
+            SetB = intToASCIIcmd(trackBar_Final.Value);
+
+
+            SetV = Convert.ToString(500 / trackBar_Velocity.Value);
             sendCommand_driver("ACT EN1");
-            sendCommand_driver("SET "+trackBar_Inital.Value.ToString()+" "+trackBar_Final.Value.ToString()+" "+trackBar_Velocity.Value.ToString());
+            sendCommand_driver("SET A"+SetA+" B"+ SetB + " V"+SetV.ToString());
            
             sendCommand_driver("ACT St");
             chart1.Series[0].Points.Clear();
@@ -163,6 +173,23 @@ namespace MSC_control
         //---------------------------------------------------------------------------
         //functions
         //---------------------------------------------------------------------------
+        string intToASCIIcmd(int value)
+        {
+            //set 1
+            int valInt1 = (value / 10);
+            valInt1 = valInt1 + 48;
+            System.Text.ASCIIEncoding asciiEncoding = new System.Text.ASCIIEncoding();
+            byte[] btNumber = new byte[] { (byte)valInt1 };
+            string SetA1 = asciiEncoding.GetString(btNumber);
+
+            //set A2
+            int valInt2 = value - (value / 10) * 10;
+            valInt2 = valInt2 + 48;
+            asciiEncoding = new System.Text.ASCIIEncoding();
+            btNumber = new byte[] { (byte)valInt2 };
+            string SetA2 = asciiEncoding.GetString(btNumber);
+            return SetA1 + SetA2;
+        }
 
         void dataReceive_driver(IAsyncResult ia)
         {
@@ -214,6 +241,7 @@ namespace MSC_control
 
         void parsedata_driver(String data) 
         {
+            /*
             String[] _commandArry = data.Split(' ');
             if (_commandArry[0] == "sRA"&&_commandArry[1]== "LMDscandata")
             {
@@ -224,12 +252,14 @@ namespace MSC_control
                     scanData[i_para] = Convert.ToInt32(_commandArry[i_para + 26],16);   //scan data
                     deg[i_para] =- 185 / 2 + (185 / (float)dataLength)*(float)i_para;                 //scan deg
                 }
-                replied = true;
+                replied_driver = true;
             }
+            */
         }
 
         void parsedata_sensor(String data)
         {
+            /*
             String[] _commandArry = data.Split(' ');
             if (_commandArry[0] == "sRA" && _commandArry[1] == "LMDscandata")
             {
@@ -238,10 +268,11 @@ namespace MSC_control
                 for (int i_para = 0; i_para < dataLength; i_para++)
                 {
                     scanData[i_para] = Convert.ToInt32(_commandArry[i_para + 26], 16);   //scan data
-                    deg[i_para] = -185 / 2 + (185 / (float)dataLength) * (float)i_para;                 //scan deg
+                    deg[i_para] = -185 / 2 + (185 / (float)dataLength) * (float)i_para;  //scan deg
                 }
-                replied = true;
+                replied_sensor = true;
             }
+            */
         }
 
         private void button_clrErr_Click(object sender, EventArgs e)
